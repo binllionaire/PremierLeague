@@ -10,6 +10,13 @@
   font-weight: 900;
   font-style: normal;
 }
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Archivo&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
+@font-face {
+  font-family: "HelveticaNowDisplay"; 
+  src: url("//db.onlinewebfonts.com/t/2748e4033acabd28eeb3dee4b5a2ce43.eot"); 
+  src: url("//db.onlinewebfonts.com/t/2748e4033acabd28eeb3dee4b5a2ce43.eot?#iefix") format("embedded-opentype"), url("//db.onlinewebfonts.com/t/2748e4033acabd28eeb3dee4b5a2ce43.woff2") format("woff2"), url("//db.onlinewebfonts.com/t/2748e4033acabd28eeb3dee4b5a2ce43.woff") format("woff"), url("//db.onlinewebfonts.com/t/2748e4033acabd28eeb3dee4b5a2ce43.ttf") format("truetype"), url("//db.onlinewebfonts.com/t/2748e4033acabd28eeb3dee4b5a2ce43.svg#HelveticaNowDisplay") format("svg"); }
 .App {
   text-align: center;
 }

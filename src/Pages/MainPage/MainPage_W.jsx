@@ -2,123 +2,95 @@ import React, { useEffect, useState } from "react";
 
 const MainPage_W = () => {
     return(
-    <div id = "main_page">
-        <div id = "contents">
-            <div id = "schedule">
-                <div id="schedule_page">
-                    <div id ="calendar">
-                    <p id="prev">&lt;</p>
-                    <p id='date'>2022-12-30</p>
-                    <p id="next">&gt;</p>
+    <div className = "main-page">
+        <div className="nav-section">
+            <nav id="nav-wrapper">
+                    <img id="open" src="/img/plus.png" width="50px" height="50px"></img>
+                    <div className="open-menu">
+
                     </div>
+            </nav>
+       </div>
+
+       <header className="header-section">
+            <div className="divider"></div>
+            <div className="header-intro">
+                <div className="h1">
+                    <h1>PREMIER</h1>
+                </div>
+                <div className="h1">
+                    <h1>LEAGUE</h1>
+                </div>
+                <div className="h1" >
+                    <h1>SCHEDULE</h1>
+                </div>
+                <div className="h1">
+                    <h1>AND</h1>
+                </div>
+                <div className="h1">
+                    <h1>LEADER</h1>
+                </div>
+                <div className="h1">
+                    <h1>BOARD</h1>
                 </div>
             </div>
-            <div id = "leaderboard">
-                <div id="leaderboard_page">
-                    <p id='sub_title'>순위표</p>
-                </div>
-            </div>
-        </div>
-        <div id="title">
-            <p id="logo">#PremierLeague</p>
-        </div>
+       </header>
+
         <style jsx>{`
-        *{
-            
-        }
-        :root{
-            --maincolor : #32063A;
-        }
-        #main_page{
-            width : 100%;
-        }
-        #contents{
-            width : 90%;
-            float:left;
-            height : 100vh;
-            background-color : var(--maincolor);
-        }
-        #schedule{
-            background-color : var(--maincolor);
-            width:50%;
-            height : 100vh;
-            float:left;
-        }
-        #schedule_page{
-            background-color : white;
-            width:90%;
-            height:90%;
-            margin:30px auto 0 auto;
-            border-radius:20px;
-            }
-        
-        #calendar{
+        .main-page{
             width:100%;
+            background-color: #d91a32;
         }
-        #prev{
-            width:20%;
-            float:left;
-            padding-top:30px;
-            font-size:30px;
-            text-align:center;
+        .nav-section{
+            width:85%;
+            margin: 0 auto 0 auto;
+            background-color: #d91a32;
+            height:150px;
         }
-        #next{
-            font-family: 'Pretendard-Regular';
-            width:20%;
-            float:left;
-            padding-top:30px;
-            font-size:30px;
-            text-align:center;
-        }
-        #date{
-            width:60%;
-            float:left;
-            font-family: 'Pretendard-Regular';
-            text-align:center;
-            padding-top:30px;
-            font-size:30px;
-        }
-        #leaderboard{
-            background-color : var(--maincolor);
-            width:50%;
-            height : 100vh;
-            float:left;
-        }
-        #leaderboard_page{
-            font-family: 'Pretendard-Regular';
-            background-color : white;
-            width:90%;
-            height:90%;
-            margin:30px auto 0 auto;
-            border-radius:20px;
-        }
-        #sub_title{
-            font-family: 'Pretendard-Regular';
-            text-align:center;
-            padding-top:30px;
-            font-size:30px;
-            font-weight:900;
-        }
-        #title{
-            width : 10%;
-            height : 100vh;
-            overflow:hidden;
-            background-color : var(--maincolor);
+        #open{
             float:right;
-            position:relative;
+            margin:50px;
+            cursor:pointer;
         }
-        #logo{
-            font-family: 'Pretendard-Black';
-            font-weight:900;
-            width:100%;
-            position:absolute;
-            display:block;
-            bottom:66%;
-            left:0px;
-            color : white;
-            transform: rotate(90deg);
-            font-size:80px;
+        .header-section{
+            background-color: #d91a32;
+            margin: 0 auto 0 auto;
+            width:85%;
+        }
+        .divider{
+            border-top:2px solid black;
+            height:40px;
+            margin : 0 auto 20px auto;
+        }
+        h1{
+            font-family: 'Archivo';
+            font-weight: 400;
+            font-size: 12vw;
+            line-height: 0.9;
+            margin-top: 0px;
+            margin-bottom: 0px;
+            position: relative;
+            display: block;
+        }
+        #open{
+            transition: all ease 1s;
             
+        }
+        #open:hover {
+            transform: rotate(135deg );
+            transform-origin : 50% 50%;
+        }
+        @keyframes .header-intro {
+            0%{
+            clip-path:polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%);
+            transform:translateY(100%);
+            }
+            95%{
+                transform:translateY(0%);
+            }
+            100%{
+                clip-path:polygon(0% 00%, 100% 0%, 100% 100%, 0% 100%);
+            }
         }
         `}</style>
     </div>
