@@ -1,10 +1,29 @@
 import React, { useEffect, useState } from "react";
-
+import axios, * as others from 'axios';
 const MainPage_W = () => {
     const [isScrolled, setIsScrolled] = useState(false);
     const [openClicked, setOpenClicked] = useState(false);
 
+    const cheerio = require("cheerio");
+    
+    const getHtml = async () => {
+      
+      try {
+        return await axios.get("/94/England-Premier-League");
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    const parsing = async () => {
+      const html = await getHtml();
+      const $ = cheerio.load(html.data);
+      $("#overall > div:nth-child(1) > div > table > tbody > tr:nth-child(2) > td:nth-child(4) > a"
+         ).text()
+      console.log($("#overall > div:nth-child(1) > div > table > tbody > tr:nth-child(2) > td:nth-child(4) > a"
+      ).text())
+    };
     useEffect(() => {
+        parsing()
         window.addEventListener('scroll', handleScroll); // 스크롤 이벤트 등록
         window.addEventListener('scroll', rollBall); // 스크롤 이벤트 등록
         return () => {
@@ -14,7 +33,7 @@ const MainPage_W = () => {
       }, []);
     
     const handleScroll = () => {
-        
+        console.log(window.scrollY)
         if(window.scrollY >= 500){
             setIsScrolled(true);
         }
@@ -101,7 +120,7 @@ const MainPage_W = () => {
             
             <div className="leader-board-section">
                 <div className="h2" >
-                    <h3>LEADER BOARD</h3>
+                    <h3 id="leader-board-title">LEADER BOARD</h3>
                 </div>
 
             </div>
@@ -116,6 +135,7 @@ const MainPage_W = () => {
         <style jsx>{`
             .leader-board-section{
                 height:700px;
+                margin
             }
             #ball{
                 float:right;
