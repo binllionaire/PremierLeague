@@ -4,7 +4,7 @@ module.exports = function(app) {
   app.use(
     '/api',
     createProxyMiddleware({
-      target: 'https://kr.betsapi.com/lt/',
+      target: 'https://betsapi.com/lt/',
       changeOrigin: true,
     })
   );

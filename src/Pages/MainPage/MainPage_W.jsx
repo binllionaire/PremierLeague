@@ -3,7 +3,10 @@ import axios, * as others from 'axios';
 const MainPage_W = () => {
     const [isScrolled, setIsScrolled] = useState(false);
     const [openClicked, setOpenClicked] = useState(false);
-
+    const [top1,setTop1] = useState("")
+    const [top2,setTop2] = useState("")
+    const [top3,setTop3] = useState("")
+    const [top4,setTop4] = useState("")
     const cheerio = require("cheerio");
     
     const getHtml = async () => {
@@ -17,18 +20,22 @@ const MainPage_W = () => {
     const parsing = async () => {
       const html = await getHtml();
       const $ = cheerio.load(html.data);
-      $("#overall > div:nth-child(1) > div > table > tbody > tr:nth-child(2) > td:nth-child(4) > a"
-         ).text()
       console.log($("#overall > div:nth-child(1) > div > table > tbody > tr:nth-child(2) > td:nth-child(4) > a"
-      ).text())
+         ).text())
+      setTop1($("#overall > div:nth-child(1) > div > table > tbody > tr:nth-child(2) > td:nth-child(4) > a").text())
+      setTop2($("#overall > div:nth-child(1) > div > table > tbody > tr:nth-child(3) > td:nth-child(4) > a").text())
+      setTop3($("#overall > div:nth-child(1) > div > table > tbody > tr:nth-child(4) > td:nth-child(4) > a").text())
+      setTop4($("#overall > div:nth-child(1) > div > table > tbody > tr:nth-child(5) > td:nth-child(4) > a").text())
     };
     useEffect(() => {
         parsing()
         window.addEventListener('scroll', handleScroll); // 스크롤 이벤트 등록
         window.addEventListener('scroll', rollBall); // 스크롤 이벤트 등록
+        
         return () => {
           window.removeEventListener('scroll', handleScroll); // 스크롤 이벤트 제거
           window.removeEventListener('scroll', rollBall); // 스크롤 이벤트 제거
+         
         };
       }, []);
     
@@ -40,18 +47,58 @@ const MainPage_W = () => {
         else{
             setIsScrolled(false);
         }
+        var pos = document.getElementsByClassName("progress-container")[0].offsetTop
+        var pos2 = document.getElementById("header-end").offsetTop
+        var pos3 = document.getElementById("top1-img").offsetTop
+        if(window.scrollY > pos2){
+            document.getElementById("rank-title-1").style.display = "block";
+            document.getElementById("rank-title-1").style.animation ="fadeInUp 1s";
+        }
+        else{
+            document.getElementById("rank-title-1").style.display = "none";
+        }
+        if(window.scrollY > pos){
+            document.getElementById("top1-img").style.display = "block";
+            document.getElementById("top1-img").style.animation ="vanishIn 2s";
+            document.getElementById("top1-img").style.animationFillMode="forwards";
+            document.getElementById("team-title-1").style.display = "block";
+            document.getElementById("team-title-1").style.animation ="vanishIn 1s";
+        }
+        else{
+            document.getElementById("top1-img").style.display = "none";
+            document.getElementById("team-title-1").style.display = "none";
+        }
+        if(window.scrollY > pos3){
+            document.getElementById("rank-title").style.display = "block";
+            document.getElementById("rank-title").style.animation ="fadeInUp 1s";
+        }
+        else{
+            document.getElementById("rank-title").style.display = "none";
+        }
+        if(window.scrollY > pos3){
+            document.getElementById("top2-img").style.display = "block";
+            document.getElementById("top2-img").style.animation ="vanishIn 2s";
+            document.getElementById("top2-img").style.animationFillMode="forwards";
+            document.getElementById("team-title-2").style.display = "block";
+            document.getElementById("team-title-2").style.animation ="vanishIn 1s";
+        }
+        else{
+            document.getElementById("top2-img").style.display = "none";
+            document.getElementById("team-title-2").style.display = "none";
+        }
     }
+    
     var i = 0;
     const rollBall = () => {
-        
         var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
         var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-        var scrolled = ((window.scrollY-500)/height) * 200;
+        var scrolled = ((window.scrollY-500)) * 0.1;
         i+=7;
         document.getElementsByClassName("progress-bar")[0].style.width = scrolled + "%";
         document.getElementById("ball").style.transform = "rotate("+i+"deg)"
-        
+    
     }
+    
     const openMenu = () => {
         if(openClicked === true){
             setOpenClicked(false)
@@ -106,7 +153,7 @@ const MainPage_W = () => {
                 <div className="h1">
                     <h1>LEADER</h1>
                 </div>
-                <div className="h1">
+                <div className="h1" id="header-end">
                     <h1>BOARD</h1>
                 </div>
             </div>
@@ -121,6 +168,36 @@ const MainPage_W = () => {
             <div className="leader-board-section">
                 <div className="h2" >
                     <h3 id="leader-board-title">LEADER BOARD</h3>
+                    <div className="team-intro-section">
+                        <h2 id="rank-title-1" className="rank-title">TOP 1</h2>
+                    </div>
+                    <div className="team-title" id="team-title-1">{top1}</div>
+                    
+                    <div className="team-logo-section">
+                        <img id = "top1-img" className="team-img" src="/img/Arsenal.png"></img>
+                    </div>
+
+                    <div className="team-intro-section">
+                        <h2 id="rank-title">TOP 2</h2>
+                    </div>
+                    <div className="team-title" id="team-title-2">{top2}</div>
+                    <div className="team-logo-section">
+                        <img id = "top2-img" className="team-img" src="/img/team_manchester_city.png"></img>
+                    </div>
+
+                    <div className="team-intro-section">
+                        <h2 id="rank-title">TOP 3</h2>
+                    </div>
+                    <div className="team-title" id="team-title-3">{top3}</div>
+                    <div className="team-logo-section">
+                        <img id = "top1-img" className="team-img" src="/img/team_newcastle.png"></img>
+                    </div>
+                    <h2 id="rank-title">TOP 4</h2>
+                    <div className="team-title" id="team-title-4">{top4}</div>
+                    <div className="team-logo-section">
+                        <img id = "top1-img" className="team-img" src="/img/team_manchester_united.png"></img>
+                    </div>
+                    
                 </div>
 
             </div>
@@ -133,16 +210,64 @@ const MainPage_W = () => {
        </body>
 
         <style jsx>{`
+            
+            .rank-title{
+                margin:0;
+                animation-fill-mode: backwards;
+            }
+            .team-title{
+                font-family: 'Archivo';
+                animation-fill-mode: backwards;
+                font-size:100px;
+                margin-bottom:50px;
+            }
+            @keyframes vanishIn {
+            0% {
+                opacity: 0;
+                transform-origin: 50% 50%;
+                transform: scale(1, 1);
+                filter: blur(90px);
+            }
+            100% {
+                opacity: 0.9;
+                transform-origin: 50% 50%;
+                transform: scale(1, 1);
+                filter: blur(0px);
+            }
+            
+            }
+        .team-logo-section{
+            height:500px;
+            margin:0 auto 0 auto;
+            width:100%;
+            
+        }
+        .team-intro-section{
+            height:30px;
+            margin:0 auto 0 auto;
+            width:100%;
+        }
+        #leader-board-title{
+            margin-top:0;
+            margin-bottom:150px;
+        }
             .leader-board-section{
-                height:700px;
-                margin
+                width:85%;
+                margin:0 auto 0 auto;
+                text-align:center;
+            }
+            .team-img{
+                margin:0 auto 0 auto;
+                display:block;
+                height:80%;
+                animation-fill-mode: backwards;
             }
             #ball{
                 float:right;
                 transform: rotate(135deg);
             }
         .progress-container {
-            margin-top:100px;
+            padding-top:100px;
             width: 100%;
             height: 100px;
         }
@@ -250,7 +375,19 @@ const MainPage_W = () => {
         #header-intro{
             position : relative;
         }
-        
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            50%{
+                opacity: 0.5;
+                
+            }
+            100%{
+                opacity: 0;
+                
+            }
+        }
         @keyframes fadeInUp {
             0% {
                 opacity: 0;
