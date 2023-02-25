@@ -7,6 +7,12 @@ const MainPage_W = () => {
     const [top2,setTop2] = useState("")
     const [top3,setTop3] = useState("")
     const [top4,setTop4] = useState("")
+    const [top1img,setTop1img] = useState("")
+    const [top2img,setTop2img] = useState("")
+    const [top3img,setTop3img] = useState("")
+    const [top4img,setTop4img] = useState("")
+    const [nextHome,setNextHome] = useState("")
+    const [nextAway,setNextAway] = useState("")
     const cheerio = require("cheerio");
     
     const getHtml = async () => {
@@ -20,12 +26,16 @@ const MainPage_W = () => {
     const parsing = async () => {
       const html = await getHtml();
       const $ = cheerio.load(html.data);
-      console.log($("#overall > div:nth-child(1) > div > table > tbody > tr:nth-child(2) > td:nth-child(4) > a"
-         ).text())
-      setTop1($("#overall > div:nth-child(1) > div > table > tbody > tr:nth-child(2) > td:nth-child(4) > a").text())
-      setTop2($("#overall > div:nth-child(1) > div > table > tbody > tr:nth-child(3) > td:nth-child(4) > a").text())
-      setTop3($("#overall > div:nth-child(1) > div > table > tbody > tr:nth-child(4) > td:nth-child(4) > a").text())
-      setTop4($("#overall > div:nth-child(1) > div > table > tbody > tr:nth-child(5) > td:nth-child(4) > a").text())
+      setTop1($("#overall > div:nth-child(1) > div > table > tbody > tr:nth-child(2) > td:nth-child(3) > a").text())
+      setTop2($("#overall > div:nth-child(1) > div > table > tbody > tr:nth-child(3) > td:nth-child(3) > a").text())
+      setTop3($("#overall > div:nth-child(1) > div > table > tbody > tr:nth-child(4) > td:nth-child(3) > a").text())
+      setTop4($("#overall > div:nth-child(1) > div > table > tbody > tr:nth-child(5) > td:nth-child(3) > a").text())
+      
+      setTop1img("/img/"+$("#overall > div:nth-child(1) > div > table > tbody > tr:nth-child(2) > td:nth-child(3) > a").text().replace(/\s+/g, '' )+".png")
+      setTop2img("/img/"+$("#overall > div:nth-child(1) > div > table > tbody > tr:nth-child(3) > td:nth-child(3) > a").text().split(' ').join('')+".png")
+      setTop3img("/img/"+$("#overall > div:nth-child(1) > div > table > tbody > tr:nth-child(4) > td:nth-child(3) > a").text().split(' ').join('')+".png")
+      setTop4img("/img/"+$("#overall > div:nth-child(1) > div > table > tbody > tr:nth-child(5) > td:nth-child(3) > a").text().split(' ').join('')+".png")
+      setNextHome($("body > div > div.page-main > div.my-3.my-md-5 > div > div.tab-content > div.tab-pane.active > div > div.col-md-9 > div:nth-child(1) > table > tbody > tr:nth-child(1) > td:nth-child(3) > a:nth-child(2)").text())
     };
     useEffect(() => {
         parsing()
@@ -40,7 +50,6 @@ const MainPage_W = () => {
       }, []);
     
     const handleScroll = () => {
-        console.log(window.scrollY)
         if(window.scrollY >= 500){
             setIsScrolled(true);
         }
@@ -50,42 +59,7 @@ const MainPage_W = () => {
         var pos = document.getElementsByClassName("progress-container")[0].offsetTop
         var pos2 = document.getElementById("header-end").offsetTop
         var pos3 = document.getElementById("top1-img").offsetTop
-        if(window.scrollY > pos2){
-            document.getElementById("rank-title-1").style.display = "block";
-            document.getElementById("rank-title-1").style.animation ="fadeInUp 1s";
-        }
-        else{
-            document.getElementById("rank-title-1").style.display = "none";
-        }
-        if(window.scrollY > pos){
-            document.getElementById("top1-img").style.display = "block";
-            document.getElementById("top1-img").style.animation ="vanishIn 2s";
-            document.getElementById("top1-img").style.animationFillMode="forwards";
-            document.getElementById("team-title-1").style.display = "block";
-            document.getElementById("team-title-1").style.animation ="vanishIn 1s";
-        }
-        else{
-            document.getElementById("top1-img").style.display = "none";
-            document.getElementById("team-title-1").style.display = "none";
-        }
-        if(window.scrollY > pos3){
-            document.getElementById("rank-title").style.display = "block";
-            document.getElementById("rank-title").style.animation ="fadeInUp 1s";
-        }
-        else{
-            document.getElementById("rank-title").style.display = "none";
-        }
-        if(window.scrollY > pos3){
-            document.getElementById("top2-img").style.display = "block";
-            document.getElementById("top2-img").style.animation ="vanishIn 2s";
-            document.getElementById("top2-img").style.animationFillMode="forwards";
-            document.getElementById("team-title-2").style.display = "block";
-            document.getElementById("team-title-2").style.animation ="vanishIn 1s";
-        }
-        else{
-            document.getElementById("top2-img").style.display = "none";
-            document.getElementById("team-title-2").style.display = "none";
-        }
+       
     }
     
     var i = 0;
@@ -168,49 +142,117 @@ const MainPage_W = () => {
             <div className="leader-board-section">
                 <div className="h2" >
                     <h3 id="leader-board-title">LEADER BOARD</h3>
-                    <div className="team-intro-section">
-                        <h2 id="rank-title-1" className="rank-title">TOP 1</h2>
-                    </div>
-                    <div className="team-title" id="team-title-1">{top1}</div>
                     
+                    <div class="div-center gallery">
+                        <div id="carousel">
+                        <div><img src={top1img} ></img></div>
+                        <div><img src={top2img} ></img></div>
+                        <div><img src={top3img} ></img></div>
+                        <div><img src={top4img} ></img></div>
+                        </div>
+                        </div>
+                    <div className="top-team">
+                    <div>
+                    <div className="team-intro-section">
+                        <h2 id="rank-title">TOP 1</h2>
+                    <div className="team-title" id="team-title-1">{top1}</div>
                     <div className="team-logo-section">
-                        <img id = "top1-img" className="team-img" src="/img/Arsenal.png"></img>
+                        <img id = "top1-img" className="team-img" src={top1img}></img>
                     </div>
+                    </div>
+                    
 
                     <div className="team-intro-section">
                         <h2 id="rank-title">TOP 2</h2>
-                    </div>
                     <div className="team-title" id="team-title-2">{top2}</div>
                     <div className="team-logo-section">
-                        <img id = "top2-img" className="team-img" src="/img/team_manchester_city.png"></img>
+                        <img id = "top2-img" className="team-img" src={top2img}></img>
                     </div>
-
-                    <div className="team-intro-section">
-                        <h2 id="rank-title">TOP 3</h2>
                     </div>
-                    <div className="team-title" id="team-title-3">{top3}</div>
-                    <div className="team-logo-section">
-                        <img id = "top1-img" className="team-img" src="/img/team_newcastle.png"></img>
                     </div>
-                    <h2 id="rank-title">TOP 4</h2>
-                    <div className="team-title" id="team-title-4">{top4}</div>
-                    <div className="team-logo-section">
-                        <img id = "top1-img" className="team-img" src="/img/team_manchester_united.png"></img>
+                    <div className="team-second">
+                        <div className="team-intro-section">
+                            <h2 id="rank-title">TOP 3</h2>
+                            <div className="team-title" id="team-title-3">{top3}</div>
+                            <div className="team-logo-section">
+                            <img id = "top1-img" className="team-img" src={top3img}></img>
+                            </div>
+                        </div>
+                        <div className="team-intro-section">
+                        <h2 id="rank-title">TOP 4</h2>
+                        <div className="team-title" id="team-title-4">{top4}</div>
+                        <div className="team-logo-section">
+                            <img id = "top1-img" className="team-img" src={top4img}></img>
+                        </div>
+                        </div>
                     </div>
-                    
                 </div>
-
+                </div>
             </div>
             <div className="match-schedule-section">
-                <div className="h3" >
-                    <h3>TODAY'S MATCH</h3>
+                <div className="match-schedule-title" >
+                    <h3>NEXT MATCH</h3>
                 </div>
                 
             </div>
        </body>
 
         <style jsx>{`
+        #carousel img{
             
+            cursor: pointer;
+            transition: all .5s ease;
+            width:100%;
+            }
+            #carousel img:hover{
+            -webkit-filter: grayscale(0);
+            
+            }
+
+            @keyframes rotation{
+            from{
+            transform: rotateY(0deg);
+            }
+            to{
+            transform: rotateY(360deg);
+            }
+            }
+            #carousel div:nth-child(1) {transform: rotateY(0deg) translateZ(288px);}
+            #carousel div:nth-child(2) { transform: rotateY(90deg) translateZ(288px);}
+            #carousel div:nth-child(3) { transform: rotateY(180deg) translateZ(288px);}
+            #carousel div:nth-child(4) { transform: rotateY(270deg) translateZ(288px);}
+            .gallery{
+                margin: 4% auto;
+                width: 200px;
+                height: 500px;
+                position: relative;
+                perspective: 5000px;
+                }
+                #carousel{
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                transform-style: preserve-3d;
+                animation: rotation 20s infinite linear;
+                }
+                #carousel:hover{
+                animation-play-state: paused;
+                }
+                #carousel div{
+                display: block;
+                position: absolute;
+                width: 90%;
+                height: 100%;
+                left: 10px;
+                top: 10px;
+                background: black;
+                overflow: hidden;
+                background:none;
+                }
+            .match-schedule-title{
+                margin-top:100px;
+                text-align:center;
+            }
             .rank-title{
                 margin:0;
                 animation-fill-mode: backwards;
@@ -218,9 +260,20 @@ const MainPage_W = () => {
             .team-title{
                 font-family: 'Archivo';
                 animation-fill-mode: backwards;
-                font-size:100px;
+                font-size:50px;
+                color : white;
                 margin-bottom:50px;
+                text-shadow: 0 0 5px #FFF;
             }
+            @keyframes flicker {
+            0%{
+                filter: 
+                drop-shadow(0px 0px 10px #fff),
+            }
+            100% {
+                filter:drop-shadow(0px 0px 25px #fff);
+            }
+        } 
             @keyframes vanishIn {
             0% {
                 opacity: 0;
@@ -236,16 +289,21 @@ const MainPage_W = () => {
             }
             
             }
+            .top-team{
+                height:500px;
+            }
+            
         .team-logo-section{
-            height:500px;
+            height:100px;
             margin:0 auto 0 auto;
             width:100%;
             
         }
         .team-intro-section{
-            height:30px;
+            float:left;
+            height:500px;
             margin:0 auto 0 auto;
-            width:100%;
+            width:25%;
         }
         #leader-board-title{
             margin-top:0;
@@ -259,8 +317,11 @@ const MainPage_W = () => {
             .team-img{
                 margin:0 auto 0 auto;
                 display:block;
-                height:80%;
+                width:60%;
                 animation-fill-mode: backwards;
+                filter: 
+                drop-shadow(0px 0px 10px #fff);
+                animation: flicker 2.5s infinite alternate ease-in;
             }
             #ball{
                 float:right;
