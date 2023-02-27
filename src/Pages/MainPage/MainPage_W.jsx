@@ -14,7 +14,16 @@ const MainPage_W = () => {
     const [nextHome,setNextHome] = useState("")
     const [nextAway,setNextAway] = useState("")
     const cheerio = require("cheerio");
-    
+    let teamName = []
+
+    const [team, setTeam] = useState([
+        {name : "", img : ""},
+    ]);
+
+  
+      console.log(team)
+      
+    console.log(team)
     const getHtml = async () => {
       
       try {
@@ -23,19 +32,34 @@ const MainPage_W = () => {
         console.error(error);
       }
     };
+    const addTeam = (e) => {
+
+    }
     const parsing = async () => {
       const html = await getHtml();
-      const $ = cheerio.load(html.data);
-      setTop1($("#overall > div:nth-child(1) > div > table > tbody > tr:nth-child(2) > td:nth-child(3) > a").text())
-      setTop2($("#overall > div:nth-child(1) > div > table > tbody > tr:nth-child(3) > td:nth-child(3) > a").text())
-      setTop3($("#overall > div:nth-child(1) > div > table > tbody > tr:nth-child(4) > td:nth-child(3) > a").text())
-      setTop4($("#overall > div:nth-child(1) > div > table > tbody > tr:nth-child(5) > td:nth-child(3) > a").text())
       
-      setTop1img("/img/"+$("#overall > div:nth-child(1) > div > table > tbody > tr:nth-child(2) > td:nth-child(3) > a").text().replace(/\s+/g, '' )+".png")
-      setTop2img("/img/"+$("#overall > div:nth-child(1) > div > table > tbody > tr:nth-child(3) > td:nth-child(3) > a").text().split(' ').join('')+".png")
-      setTop3img("/img/"+$("#overall > div:nth-child(1) > div > table > tbody > tr:nth-child(4) > td:nth-child(3) > a").text().split(' ').join('')+".png")
-      setTop4img("/img/"+$("#overall > div:nth-child(1) > div > table > tbody > tr:nth-child(5) > td:nth-child(3) > a").text().split(' ').join('')+".png")
+      const $ = cheerio.load(html.data);
+      
+      for(let i=2;i<23;i++){
+        teamName.push($("#overall > div:nth-child(1) > div > table > tbody > tr:nth-child("+i+") > td:nth-child(4) > a").text())
+      }
+      let obj = {};
+      teamName.forEach((element,index) => {
+        obj[element] = "/img/"+element+".png"
+      });
+      console.log(obj)
+      console.log(teamName)
+      setTop1($("#overall > div:nth-child(1) > div > table > tbody > tr:nth-child(2) > td:nth-child(4) > a").text())
+      setTop2($("#overall > div:nth-child(1) > div > table > tbody > tr:nth-child(3) > td:nth-child(4) > a").text())
+      setTop3($("#overall > div:nth-child(1) > div > table > tbody > tr:nth-child(4) > td:nth-child(4) > a").text())
+      setTop4($("#overall > div:nth-child(1) > div > table > tbody > tr:nth-child(5) > td:nth-child(4) > a").text())
+      
+      setTop1img("/img/"+$("#overall > div:nth-child(1) > div > table > tbody > tr:nth-child(2) > td:nth-child(4) > a").text().split(' ').join('')+".png")
+      setTop2img("/img/"+$("#overall > div:nth-child(1) > div > table > tbody > tr:nth-child(3) > td:nth-child(4) > a").text().split(' ').join('')+".png")
+      setTop3img("/img/"+$("#overall > div:nth-child(1) > div > table > tbody > tr:nth-child(4) > td:nth-child(4) > a").text().split(' ').join('')+".png")
+      setTop4img("/img/"+$("#overall > div:nth-child(1) > div > table > tbody > tr:nth-child(5) > td:nth-child(4) > a").text().split(' ').join('')+".png")
       setNextHome($("body > div > div.page-main > div.my-3.my-md-5 > div > div.tab-content > div.tab-pane.active > div > div.col-md-9 > div:nth-child(1) > table > tbody > tr:nth-child(1) > td:nth-child(3) > a:nth-child(2)").text())
+    console.log(top1)
     };
     useEffect(() => {
         parsing()
@@ -64,8 +88,6 @@ const MainPage_W = () => {
     
     var i = 0;
     const rollBall = () => {
-        var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-        var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
         var scrolled = ((window.scrollY-500)) * 0.1;
         i+=7;
         document.getElementsByClassName("progress-bar")[0].style.width = scrolled + "%";
@@ -245,7 +267,6 @@ const MainPage_W = () => {
                 height: 100%;
                 left: 10px;
                 top: 10px;
-                background: black;
                 overflow: hidden;
                 background:none;
                 }
