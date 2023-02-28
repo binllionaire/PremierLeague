@@ -3,27 +3,13 @@ import axios, * as others from 'axios';
 const MainPage_W = () => {
     const [isScrolled, setIsScrolled] = useState(false);
     const [openClicked, setOpenClicked] = useState(false);
-    const [top1,setTop1] = useState("")
-    const [top2,setTop2] = useState("")
-    const [top3,setTop3] = useState("")
-    const [top4,setTop4] = useState("")
-    const [top1img,setTop1img] = useState("")
-    const [top2img,setTop2img] = useState("")
-    const [top3img,setTop3img] = useState("")
-    const [top4img,setTop4img] = useState("")
-    const [nextHome,setNextHome] = useState("")
-    const [nextAway,setNextAway] = useState("")
     const cheerio = require("cheerio");
     let teamName = []
 
     const [team, setTeam] = useState([
         {name : "", img : ""},
     ]);
-
   
-      console.log(team)
-      
-    console.log(team)
     const getHtml = async () => {
       
       try {
@@ -32,37 +18,43 @@ const MainPage_W = () => {
         console.error(error);
       }
     };
-    const addTeam = (e) => {
 
-    }
-    const parsing = async () => {
-      const html = await getHtml();
-      
-      const $ = cheerio.load(html.data);
-      
-      for(let i=2;i<23;i++){
-        teamName.push($("#overall > div:nth-child(1) > div > table > tbody > tr:nth-child("+i+") > td:nth-child(4) > a").text())
-      }
-      let obj = {};
-      teamName.forEach((element,index) => {
-        obj[element] = "/img/"+element+".png"
-      });
-      console.log(obj)
-      console.log(teamName)
-      setTop1($("#overall > div:nth-child(1) > div > table > tbody > tr:nth-child(2) > td:nth-child(4) > a").text())
-      setTop2($("#overall > div:nth-child(1) > div > table > tbody > tr:nth-child(3) > td:nth-child(4) > a").text())
-      setTop3($("#overall > div:nth-child(1) > div > table > tbody > tr:nth-child(4) > td:nth-child(4) > a").text())
-      setTop4($("#overall > div:nth-child(1) > div > table > tbody > tr:nth-child(5) > td:nth-child(4) > a").text())
-      
-      setTop1img("/img/"+$("#overall > div:nth-child(1) > div > table > tbody > tr:nth-child(2) > td:nth-child(4) > a").text().split(' ').join('')+".png")
-      setTop2img("/img/"+$("#overall > div:nth-child(1) > div > table > tbody > tr:nth-child(3) > td:nth-child(4) > a").text().split(' ').join('')+".png")
-      setTop3img("/img/"+$("#overall > div:nth-child(1) > div > table > tbody > tr:nth-child(4) > td:nth-child(4) > a").text().split(' ').join('')+".png")
-      setTop4img("/img/"+$("#overall > div:nth-child(1) > div > table > tbody > tr:nth-child(5) > td:nth-child(4) > a").text().split(' ').join('')+".png")
-      setNextHome($("body > div > div.page-main > div.my-3.my-md-5 > div > div.tab-content > div.tab-pane.active > div > div.col-md-9 > div:nth-child(1) > table > tbody > tr:nth-child(1) > td:nth-child(3) > a:nth-child(2)").text())
-    console.log(top1)
-    };
+    
     useEffect(() => {
-        parsing()
+        const parsing = async () => {
+          try {
+            const html = await getHtml();
+            const $ = cheerio.load(html.data);
+      
+            let teamName = [];
+            for (let i = 2; i < 21; i++) {
+              teamName.push(
+                $(
+                  "#overall > div:nth-child(1) > div > table > tbody > tr:nth-child(" +
+                    i +
+                    ") > td:nth-child(4) > a"
+                ).text()
+              );
+            }
+            console.log(teamName)
+            let obj = [];
+            teamName.forEach((element, index) => {
+              obj.push({
+                "name": element,
+                "img": "/img/" + element.split(" ").join("") + ".png",
+              });
+            });
+            setTeam(obj);
+            console.log(team)
+          } catch (error) {
+            console.error("Error in parsing function:", error);
+          }
+        };
+      
+        parsing();
+      }, []);
+    useEffect(() => {
+
         window.addEventListener('scroll', handleScroll); // 스크롤 이벤트 등록
         window.addEventListener('scroll', rollBall); // 스크롤 이벤트 등록
         
@@ -167,45 +159,39 @@ const MainPage_W = () => {
                     
                     <div class="div-center gallery">
                         <div id="carousel">
-                        <div><img src={top1img} ></img></div>
-                        <div><img src={top2img} ></img></div>
-                        <div><img src={top3img} ></img></div>
-                        <div><img src={top4img} ></img></div>
+                            <div> {team[0] && <img src={team[0].img} alt={team[0].name} />}</div>
+                            <div> {team[1] && <img src={team[1].img} alt={team[1].name} />}</div>
+                            <div> {team[2] && <img src={team[2].img} alt={team[2].name} />}</div>
+                            <div> {team[3] && <img src={team[3].img} alt={team[3].name} />}</div>
                         </div>
                         </div>
                     <div className="top-team">
                     <div>
                     <div className="team-intro-section">
                         <h2 id="rank-title">TOP 1</h2>
-                    <div className="team-title" id="team-title-1">{top1}</div>
-                    <div className="team-logo-section">
-                        <img id = "top1-img" className="team-img" src={top1img}></img>
-                    </div>
+                    <div className="team-title" id="team-title-1">{team[0] && team[0].name}</div>
+                    <div className="team-logo-section"> {team[0] && <img id = "top1-img" className="team-img" src={team[0].img} alt={team[0].name} />}</div>
+                      
                     </div>
                     
 
                     <div className="team-intro-section">
                         <h2 id="rank-title">TOP 2</h2>
-                    <div className="team-title" id="team-title-2">{top2}</div>
-                    <div className="team-logo-section">
-                        <img id = "top2-img" className="team-img" src={top2img}></img>
-                    </div>
+                    <div className="team-title" id="team-title-2">{team[1] && team[1].name}</div>
+                    <div className="team-logo-section"> {team[1] && <img id = "top2-img" className="team-img" src={team[1].img} alt={team[1].name} />}</div>
                     </div>
                     </div>
                     <div className="team-second">
                         <div className="team-intro-section">
                             <h2 id="rank-title">TOP 3</h2>
-                            <div className="team-title" id="team-title-3">{top3}</div>
-                            <div className="team-logo-section">
-                            <img id = "top1-img" className="team-img" src={top3img}></img>
-                            </div>
+                            <div className="team-title" id="team-title-3">{team[2] && team[2].name}</div>
+                            <div className="team-logo-section"> {team[2] && <img id = "top2-img" className="team-img" src={team[2].img} alt={team[2].name} />}</div>
                         </div>
                         <div className="team-intro-section">
                         <h2 id="rank-title">TOP 4</h2>
-                        <div className="team-title" id="team-title-4">{top4}</div>
-                        <div className="team-logo-section">
-                            <img id = "top1-img" className="team-img" src={top4img}></img>
-                        </div>
+                        <div className="team-title" id="team-title-4">{team[3] && team[3].name}</div>
+                        <div className="team-logo-section"> {team[3] && <img id = "top2-img" className="team-img" src={team[3].img} alt={team[3].name} />}</div>
+                        
                         </div>
                     </div>
                 </div>
