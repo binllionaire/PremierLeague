@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios, * as others from 'axios';
 import TeamGallery from "./TeamGallery";
+import './styles.scss';
 const MainPage_W = () => {
     const [isScrolled, setIsScrolled] = useState(false);
     const [openClicked, setOpenClicked] = useState(false);
@@ -198,8 +199,10 @@ const MainPage_W = () => {
        </body>
 
         <style jsx>{`
+       
         #gallery img{
-            
+           
+            transform: scaleX(-1);   
             cursor: pointer;
             transition: all .5s ease;
             width:100%;
@@ -217,29 +220,26 @@ const MainPage_W = () => {
             transform: rotateY(360deg);
             }
             }
-            #gallery div:nth-child(1) {transform: rotateY(0deg) translateZ(288px);}
-            #gallery div:nth-child(2) { transform: rotateY(90deg) translateZ(288px);}
-            #gallery div:nth-child(3) { transform: rotateY(180deg) translateZ(288px);}
-            #gallery div:nth-child(4) { transform: rotateY(270deg) translateZ(288px);}
+           
             .gallery{
-                margin: 4% auto;
+                margin: 300px auto 0 auto;
                 width: 200px;
                 height: 500px;
                 position: relative;
-                perspective: 5000px;
+                perspective: 500px;
                 }
                 #gallery{
                 width: 100%;
                 height: 100%;
                 position: absolute;
                 transform-style: preserve-3d;
-                animation: rotation 20s infinite linear;
+                animation: rotation 50s infinite linear;
                 }
                 
                 #gallery div{
                 display: block;
                 position: absolute;
-                width: 90%;
+                width: 80%;
                 height: 100%;
                 left: 10px;
                 top: 10px;

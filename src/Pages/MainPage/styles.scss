@@ -1,0 +1,8 @@
+$pieces: 20;
+
+/* Loop to generate the styles for each piece */
+@for $i from 1 through $pieces {
+  #gallery div:nth-child(#{$i}) {
+    transform: rotateY(#{($i - 1) * 380 / $pieces}deg) translateZ(1000px);
+  }
+}
