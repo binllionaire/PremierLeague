@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios, * as others from 'axios';
+import TeamGallery from "./TeamGallery";
 const MainPage_W = () => {
     const [isScrolled, setIsScrolled] = useState(false);
     const [openClicked, setOpenClicked] = useState(false);
@@ -73,8 +74,6 @@ const MainPage_W = () => {
             setIsScrolled(false);
         }
         var pos = document.getElementsByClassName("progress-container")[0].offsetTop
-        var pos2 = document.getElementById("header-end").offsetTop
-        var pos3 = document.getElementById("top1-img").offsetTop
        
     }
     
@@ -156,15 +155,8 @@ const MainPage_W = () => {
             <div className="leader-board-section">
                 <div className="h2" >
                     <h3 id="leader-board-title">LEADER BOARD</h3>
+                    <TeamGallery team = {team}></TeamGallery>
                     
-                    <div class="div-center gallery">
-                        <div id="carousel">
-                            <div> {team[0] && <img src={team[0].img} alt={team[0].name} />}</div>
-                            <div> {team[1] && <img src={team[1].img} alt={team[1].name} />}</div>
-                            <div> {team[2] && <img src={team[2].img} alt={team[2].name} />}</div>
-                            <div> {team[3] && <img src={team[3].img} alt={team[3].name} />}</div>
-                        </div>
-                        </div>
                     <div className="top-team">
                     <div>
                     <div className="team-intro-section">
@@ -206,13 +198,13 @@ const MainPage_W = () => {
        </body>
 
         <style jsx>{`
-        #carousel img{
+        #gallery img{
             
             cursor: pointer;
             transition: all .5s ease;
             width:100%;
             }
-            #carousel img:hover{
+            #gallery img:hover{
             -webkit-filter: grayscale(0);
             
             }
@@ -225,10 +217,10 @@ const MainPage_W = () => {
             transform: rotateY(360deg);
             }
             }
-            #carousel div:nth-child(1) {transform: rotateY(0deg) translateZ(288px);}
-            #carousel div:nth-child(2) { transform: rotateY(90deg) translateZ(288px);}
-            #carousel div:nth-child(3) { transform: rotateY(180deg) translateZ(288px);}
-            #carousel div:nth-child(4) { transform: rotateY(270deg) translateZ(288px);}
+            #gallery div:nth-child(1) {transform: rotateY(0deg) translateZ(288px);}
+            #gallery div:nth-child(2) { transform: rotateY(90deg) translateZ(288px);}
+            #gallery div:nth-child(3) { transform: rotateY(180deg) translateZ(288px);}
+            #gallery div:nth-child(4) { transform: rotateY(270deg) translateZ(288px);}
             .gallery{
                 margin: 4% auto;
                 width: 200px;
@@ -236,17 +228,15 @@ const MainPage_W = () => {
                 position: relative;
                 perspective: 5000px;
                 }
-                #carousel{
+                #gallery{
                 width: 100%;
                 height: 100%;
                 position: absolute;
                 transform-style: preserve-3d;
                 animation: rotation 20s infinite linear;
                 }
-                #carousel:hover{
-                animation-play-state: paused;
-                }
-                #carousel div{
+                
+                #gallery div{
                 display: block;
                 position: absolute;
                 width: 90%;
